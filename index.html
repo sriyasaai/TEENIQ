@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEENIQ ✨</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #dff7ff, #f5e5ff, #fff4d8);
+  color: #25213a;
+  min-height: 100vh;
+}
+
+.container {
+  width: min(900px, 94%);
+  margin: 30px auto;
+  background: rgba(255,255,255,.94);
+  border-radius: 28px;
+  padding: 28px;
+  box-shadow: 0 15px 45px rgba(80,60,120,.15);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 32px;
+  font-weight: 900;
+}
+
+.logo span {
+  color: #8b5cf6;
+}
+
+.stats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.stat {
+  background: #f3efff;
+  padding: 10px 15px;
+  border-radius: 15px;
+  font-weight: bold;
+}
+
+.hero {
+  text-align: center;
+  padding: 35px 10px 20px;
+}
+
+.robot {
+  font-size: 70px;
+  animation: float 2s infinite ease-in-out;
+}
+
+@keyframes float {
+  50% { transform: translateY(-8px); }
+}
+
+h1 {
+  font-size: 42px;
+  margin: 10px 0;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+.subtitle {
+  color: #686477;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  border-radius: 15px;
+  padding: 13px 18px;
+  font-size: 15px;
+  font-weight: bold;
+  background: #8b5cf6;
+  color: white;
+  transition: .2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  opacity: .92;
+}
+
+button.secondary {
+  background: #eee9ff;
+  color: #5d42a5;
+}
+
+button.success {
+  background: #22a06b;
+}
+
+button.warning {
+  background: #f59e0b;
+}
+
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
+
+.card {
+  background: #faf9ff;
+  border: 1px solid #ece8f8;
+  border-radius: 22px;
+  padding: 22px;
+  margin-top: 18px;
+}
+
+.progress {
+  height: 12px;
+  background: #ebe8f3;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 15px 0;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #8b5cf6;
+  transition: .3s;
+}
+
+.options {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.option {
+  background: white;
+  color: #302b40;
+  border: 2px solid #e8e2f5;
+  text-align: left;
+}
+
+.option:hover {
+  border-color: #8b5cf6;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.badge {
+  background: #fff3c4;
+  padding: 10px 14px;
+  border-radius: 15px;
+  font-weight: bold;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+}
+
+.game {
+  padding: 20px;
+  border-radius: 20px;
+  background: white;
+  border: 1px solid #ebe7f5;
+}
+
+.game h3 {
+  margin-top: 0;
+}
+
+.reward {
+  background: #eafbf3;
+  border-radius: 18px;
+  padding: 18px;
+  margin-top: 18px;
+}
+
+.tip {
+  background: #fff8df;
+  border-radius: 18px;
+  padding: 18px;
+  margin-top: 15px;
+}
+
+.center {
+  text-align: center;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.big-number {
+  font-size: 42px;
+  font-weight: 900;
+  color: #8b5cf6;
+}
+
+footer {
+  text-align: center;
+  color: #777;
+  margin-top: 25px;
+  font-size: 13px;
+}
+
+@media(max-width:600px) {
+  .container {
+    padding: 18px;
+    margin: 12px auto;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+
+  .robot {
+    font-size: 55px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+  <div class="logo">TEEN<span>IQ</span> ✨</div>
+
+  <div class="stats">
+    <div class="stat">⚡ XP: <span id="xp">0</span></div>
+    <div class="stat">🔥 Streak: <span id="streak">1</span></div>
+  </div>
+</header>
+
+<!-- HOME -->
+<section id="home" class="screen active">
+
+  <div class="hero">
+    <div class="robot">🧠</div>
+
+    <h1>Welcome to TEENIQ!</h1>
+
+    <p class="subtitle">
+      Your fun little self-care sidekick for hygiene, puberty,
+      everyday health, quizzes, games and useful tips. 💜
+    </p>
+
+    <button onclick="startQuiz()">🚀 Start Today's Quest</button>
+  </div>
+
+  <div class="card">
+    <h2>🔥 Daily Streak</h2>
+    <p>Come back each day and keep your streak going!</p>
+
+    <div class="big-number">
+      <span id="homeStreak">1</span> days
+    </div>
+
+    <p>Today's reward: <b>+20 XP</b> 🎁</p>
+  </div>
+
+  <div class="card">
+    <h2>🎁 Rewards</h2>
+
+    <div class="badges">
+      <div class="badge">🌱 Starter</div>
+      <div class="badge">🔥 3-Day Streak</div>
+      <div class="badge">⚡ XP Hunter</div>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- QUIZ -->
+<section id="quiz" class="screen">
+
+  <div class="card">
+
+    <p>
+      Question <b><span id="questionNumber">1</span></b>
+      of <b><span id="totalQuestions">8</span></b>
+    </p>
+
+    <div class="progress">
+      <div class="progress-bar" id="progress"></div>
+    </div>
+
+    <h2 id="question"></h2>
+
+    <div class="options" id="options"></div>
+
+    <div class="tip hidden" id="feedback"></div>
+
+    <br>
+
+    <button class="secondary" onclick="skipQuestion()">
+      ⏭️ Skip
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- RESULT -->
+<section id="result" class="screen">
+
+  <div class="hero">
+    <div class="robot">🎉</div>
+
+    <h1>Quest Complete!</h1>
+
+    <p class="subtitle">
+      You showed up for yourself today. That's a win. 🫶
+    </p>
+
+    <div class="card">
+      <h2>⚡ Your XP</h2>
+      <div class="big-number" id="finalXP">0</div>
+      <p id="resultMessage"></p>
+    </div>
+
+    <div class="reward">
+      🎁 <b>Daily Reward Unlocked!</b>
+      <br><br>
+      You earned a bonus <b>20 XP</b>.
+    </div>
+
+    <br>
+
+    <button onclick="showGames()">🎮 Play Mini Games</button>
+    <button class="secondary" onclick="startQuiz()">🔄 Replay Quest</button>
+  </div>
+
+</section>
+
+
+<!-- GAMES -->
+<section id="games" class="screen">
+
+  <div class="hero">
+    <h1>🎮 Mini Game Zone</h1>
+
+    <p class="subtitle">
+      Play quick games and collect bonus XP!
+    </p>
+  </div>
+
+  <div class="game-grid">
+
+    <div class="game">
+      <h3>🎯 Habit Hunt</h3>
+      <p>Pick the healthiest everyday habit.</p>
+      <button onclick="habitGame()">Play</button>
+    </div>
+
+    <div class="game">
+      <h3>🧠 Myth or Fact</h3>
+      <p>Test your health knowledge.</p>
+      <button onclick="mythGame()">Play</button>
+    </div>
+
+    <div class="game">
+      <h3>⚡ Speed Round</h3>
+      <p>Answer 5 quick questions.</p>
+      <button onclick="speedGame()">Play</button>
+    </div>
+
+    <div class="game">
+      <h3>😂 Meme Drop</h3>
+      <p>Need a tiny health laugh?</p>
+      <button onclick="memeGame()">Drop Meme</button>
+    </div>
+
+  </div>
+
+  <div class="card center" id="gameArea">
+    Choose a mini-game above! 🎮
+  </div>
+
+  <br>
+
+  <button class="secondary" onclick="showScreen('home')">
+    🏠 Home
+  </button>
+
+</section>
+
+
+<footer>
+  TEENIQ ✨ Learn • Play • Take care of yourself
+</footer>
+
+</div>
+
+
+<script>
+
+let xp = 0;
+let streak = 1;
+let currentQuestion = 0;
+
+const questions = [
+
+{
+  q: "🦷 Do you usually brush your teeth in the morning AND before bed?",
+  options: [
+    ["✨ Yep, both", 15],
+    ["🙂 Usually once", 8],
+    ["😭 I forget sometimes", 3],
+    ["🤷 I'm still working on it", 5]
+  ]
+},
+
+{
+  q: "🫧 Do you usually wash your hands before eating and after using the bathroom?",
+  options: [
+    ["🫧 Yep, basically always", 15],
+    ["🙂 Most of the time", 10],
+    ["😭 Sometimes I forget", 5],
+    ["🤔 Not really", 2]
+  ]
+},
+
+{
+  q: "🚿 Do you usually keep up with your shower or bath routine?",
+  options: [
+    ["✨ Yep, pretty regular", 15],
+    ["🙂 Most of the time", 10],
+    ["😅 Sometimes I forget", 5],
+    ["😭 Not really", 2]
+  ]
+},
+
+{
+  q: "👕 After clothes get sweaty or dirty, do you usually change into clean clothes?",
+  options: [
+    ["✨ Fresh fit secured", 15],
+    ["🙂 Usually", 10],
+    ["😅 Depends", 6],
+    ["😭 I forget", 3]
+  ]
+},
+
+{
+  q: "💧 Do you remember to drink water regularly during the day?",
+  options: [
+    ["💧 Hydration gang", 15],
+    ["🙂 When I remember", 10],
+    ["😭 I forget sometimes", 5],
+    ["🤷 Not really", 3]
+  ]
+},
+
+{
+  q: "😴 Does your sleep usually leave you feeling rested during the day?",
+  options: [
+    ["😴 Yep, I feel rested", 15],
+    ["🙂 Depends on the day", 10],
+    ["🥱 Sometimes", 6],
+    ["💀 I'm always tired", 3]
+  ]
+},
+
+{
+  q: "🧴 Do you usually keep your personal-care routine simple and comfortable?",
+  options: [
+    ["✨ Yep", 15],
+    ["🙂 Most of the time", 10],
+    ["🤔 I'm figuring it out", 7],
+    ["😭 I just try random stuff", 4]
+  ]
+},
+
+{
+  q: "🫶 If something about your health worries you, do you tell someone you trust?",
+  options: [
+    ["🫶 Yep", 15],
+    ["🙂 Sometimes", 10],
+    ["🤐 I usually keep it to myself", 5],
+    ["🤔 I'm not sure who to ask", 5]
+  ]
+}
+
+];
+
+
+function updateStats() {
+  document.getElementById("xp").textContent = xp;
+  document.getElementById("streak").textContent = streak;
+  document.getElementById("homeStreak").textContent = streak;
+}
+
+
+function showScreen(id) {
+
+  document.querySelectorAll(".screen").forEach(
+    screen => screen.classList.remove("active")
+  );
+
+  document.getElementById(id).classList.add("active");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+
+function startQuiz() {
+
+  currentQuestion = 0;
+
+  showScreen("quiz");
+
+  loadQuestion();
+}
+
+
+function loadQuestion() {
+
+  const q = questions[currentQuestion];
+
+  document.getElementById("questionNumber").textContent =
+    currentQuestion + 1;
+
+  document.getElementById("totalQuestions").textContent =
+    questions.length;
+
+  document.getElementById("question").textContent = q.q;
+
+  document.getElementById("progress").style.width =
+    ((currentQuestion) / questions.length * 100) + "%";
+
+  const optionsBox =
+    document.getElementById("options");
+
+  optionsBox.innerHTML = "";
+
+  document.getElementById("feedback")
+    .classList.add("hidden");
+
+  q.options.forEach(option => {
+
+    const button = document.createElement("button");
+
+    button.className = "option";
+
+    button.textContent = option[0];
+
+    button.onclick = () => answer(option[1]);
+
+    optionsBox.appendChild(button);
+
+  });
+
+}
+
+
+function answer(points) {
+
+  xp += points;
+
+  updateStats();
+
+  currentQuestion++;
+
+  if(currentQuestion >= questions.length) {
+
+    finishQuiz();
+
+  } else {
+
+    loadQuestion();
+
+  }
+
+}
+
+
+function skipQuestion() {
+
+  currentQuestion++;
+
+  if(currentQuestion >= questions.length) {
+
+    finishQuiz();
+
+  } else {
+
+    loadQuestion();
+
+  }
+
+}
+
+
+function finishQuiz() {
+
+  xp += 20;
+
+  updateStats();
+
+  document.getElementById("finalXP").textContent = xp;
+
+  let message = "";
+
+  if(xp >= 120) {
+    message = "🔥 Absolute legend! You smashed today's quest.";
+  }
+  else if(xp >= 80) {
+    message = "✨ Nice work! Your self-care habits are leveling up.";
+  }
+  else {
+    message = "🌱 Every small habit counts. Keep going!";
+  }
+
+  document.getElementById("resultMessage").textContent =
+    message;
+
+  showScreen("result");
+}
+
+
+function showGames() {
+
+  showScreen("games");
+
+  document.getElementById("gameArea").innerHTML =
+    "<h2>🎮 Pick a game!</h2><p>Each game can give you bonus XP.</p>";
+}
+
+
+function habitGame() {
+
+  document.getElementById("gameArea").innerHTML = `
+    <h2>🎯 Habit Hunt</h2>
+    <p>You're heading to school. Which habit is the best move?</p>
+
+    <div class="options">
+
+      <button class="option" onclick="gameAnswer(true, 'Nice! Keeping up with basic hygiene habits can help you feel comfortable.')">
+        🫧 Wash your hands before eating
+      </button>
+
+      <button class="option" onclick="gameAnswer(false, 'Try again! Think about a simple everyday health habit.')">
+        😴 Skip sleep every night
+      </button>
+
+      <button class="option" onclick="gameAnswer(false, 'Not quite! Think about a healthy everyday choice.')">
+        💧 Avoid drinking water all day
+      </button>
+
+    </div>
+  `;
+}
+
+
+function mythGame() {
+
+  document.getElementById("gameArea").innerHTML = `
+    <h2>🧠 Myth or Fact</h2>
+    <p>True or false: Getting enough sleep can help you feel more rested during the day.</p>
+
+    <button onclick="gameAnswer(true, 'Yep! Sleep is important for rest and everyday wellbeing.')">
+      ✅ FACT
+    </button>
+
+    <button class="secondary" onclick="gameAnswer(false, 'The statement is a fact. Sleep supports rest and wellbeing.')">
+      ❌ MYTH
+    </button>
+  `;
+}
+
+
+function speedGame() {
+
+  let questionsLeft = 5;
+  let score = 0;
+
+  const prompts = [
+    ["Wash your hands before eating?", "Yes"],
+    ["Is water useful during the day?", "Yes"],
+    ["Is sleep important for rest?", "Yes"],
+    ["Should you ignore worrying health changes?", "No"],
+    ["Can asking a trusted adult help when you're unsure?", "Yes"]
+  ];
+
+  function next() {
+
+    if(questionsLeft === 0) {
+
+      xp += score * 10;
+
+      updateStats();
+
+      document.getElementById("gameArea").innerHTML =
+        `<h2>⚡ Speed Round Complete!</h2>
+         <p>You earned <b>${score * 10} XP</b>!</p>`;
+
+      return;
+    }
+
+    const index = 5 - questionsLeft;
+
+    document.getElementById("gameArea").innerHTML = `
+      <h2>⚡ Speed Round</h2>
+      <p>${prompts[index][0]}</p>
+
+      <button onclick="speedAnswer('Yes')">YES</button>
+
+      <button class="secondary" onclick="speedAnswer('No')">NO</button>
+    `;
+
+  }
+
+  window.speedAnswer = function(answer) {
+
+    const index = 5 - questionsLeft;
+
+    if(answer === prompts[index][1]) {
+      score++;
+    }
+
+    questionsLeft--;
+
+    next();
+  };
+
+  next();
+}
+
+
+function memeGame() {
+
+  const memes = [
+
+    "🧠 Brain: We should sleep earlier. Me: That's tomorrow's problem. 😭",
+
+    "💧 Me remembering I haven't had water in forever: HYDRATION EMERGENCY 🚨",
+
+    "🦷 Toothbrush: It's been 12 hours. Me: okay okay I'm coming 😭",
+
+    "🫧 Hands after washing: ✨ main character energy ✨",
+
+    "😴 Me after getting enough sleep: Wait... humans are supposed to feel like this?!",
+
+    "📚 Homework + hygiene + sleep: The ultimate side quest combo."
+  ];
+
+  const meme =
+    memes[Math.floor(Math.random() * memes.length)];
+
+  xp += 5;
+
+  updateStats();
+
+  document.getElementById("gameArea").innerHTML = `
+    <h2>😂 TEENIQ Meme Drop</h2>
+
+    <div class="reward">
+      ${meme}
+    </div>
+
+    <p>+5 XP 🎁</p>
+
+    <button onclick="memeGame()">😂 Another one</button>
+  `;
+}
+
+
+function gameAnswer(correct, message) {
+
+  if(correct) {
+
+    xp += 15;
+
+    updateStats();
+
+    document.getElementById("gameArea").innerHTML = `
+      <h2>🎉 Nice!</h2>
+      <div class="reward">${message}</div>
+      <p><b>+15 XP</b> ⚡</p>
+      <button onclick="showGames()">🎮 More Games</button>
+    `;
+
+  } else {
+
+    document.getElementById("gameArea").innerHTML = `
+      <h2>👀 Almost!</h2>
+      <div class="tip">${message}</div>
+      <br>
+      <button onclick="showGames()">🔄 Try Another Game</button>
+    `;
+
+  }
+
+}
+
+
+updateStats();
+
+</script>
+
+</body>
+</html>
